@@ -20,4 +20,5 @@ class Director:
         self._builder.produce_newline_char()
         self._builder.produce_content_type("Content-Type: text/html")
         self._builder.produce_newline_char()
+        self._builder.produce_newline_char()
         self._builder.produce_html("<html><body>Hello World</body></html>")
