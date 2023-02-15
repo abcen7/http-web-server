@@ -5,16 +5,12 @@ from HTTPWebServer.HTTPWebServer import HTTPWebServer
 
 app = HTTPWebServer()
 
+print(1)
+
 
 @app.get('/')
 async def home():
-    pass
+    return {'key': 1}
 
-# from fastapi import FastAPI
-#
-# app = FastAPI()
-#
-#
-# @app.get("/")
-# async def root():
-#     return {"message": "Hello World"}
+
+home()

@@ -1,10 +1,11 @@
 import socket
 from abc import ABC
-from typing import Optional
+from typing import Optional, Callable
 
 from HTTPResponse.HTTPResponseBuilder import HTTPResponseBuilder
 from HTTPResponse.Director import Director
 from HTTPWebServer.WebServer import WebServer
+from HTTPRouter.HTTPRouter import HTTPRouter
 
 
 class HTTPWebServer(WebServer):
@@ -16,8 +17,10 @@ class HTTPWebServer(WebServer):
     DEFAULT_PORT: int = 13500
 
     def __init__(self, host: Optional[str] = DEFAULT_HOST, port: Optional[int] = DEFAULT_PORT):
+        self.router = None
         self.host: str = host
         self.port: int = port
+        self.router: HTTPRouter = HTTPRouter()
         self.run()
 
     # Getting all data from reading socket
@@ -46,7 +49,21 @@ class HTTPWebServer(WebServer):
 
     def execute_routing(self, request: str):
         method, route, protocol = request[0].split()
+        # check if requested url route exists
         print(method, route, protocol)
+
+    def get(self, route_path: str) -> Callable:
+        print(1)
+
+        def decorator(function):
+            async def wrapper(*args, **kwargs):
+                self.router.add_route(route_path)
+                await function(*args, **kwargs)
+                print(self.router.routes)
+
+            return wrapper
+
+        return decorator
 
     def run(self):
         server_socket = socket.socket(

@@ -21,7 +21,7 @@ class WebServer(Singleton, ABC):
 
     @staticmethod
     @abstractmethod
-    def get(function) -> Callable:
+    def get(function, route_path: str) -> Callable:
         pass
 
     @abstractmethod

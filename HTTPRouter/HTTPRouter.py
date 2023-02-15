@@ -5,7 +5,7 @@ from HTTPRouter.Router import Router
 
 
 class HTTPRouter(Router):
-    routes: List[Route]
+    routes: List[Route] = []
 
     def add_route(self, route_path: str):
         self.routes.append(Route(route_path))
